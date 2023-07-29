@@ -15,7 +15,7 @@ export class LoginComponent {
   
   constructor(private fb:FormBuilder,
               private router:Router,
-              private snackBar: MatSnackBar,){
+              private snackBar: MatSnackBar){
 
     this.form=this.fb.group({
       usuario: ['',Validators.required],
@@ -32,6 +32,7 @@ export class LoginComponent {
 
     if(usuario=='anibal' && password=='admin'){
       this.fakeLoading();
+      
     }else{
       this.error();
       this.form.reset();
@@ -49,8 +50,7 @@ export class LoginComponent {
   fakeLoading(){
     this.loading=true;
     setTimeout(() => {
-      //redireccionamos al dashboard
-      this.loading=false;
+    
       this.router.navigate(['dashboard'])
     },1500);
   }

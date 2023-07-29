@@ -1,0 +1,48 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { Usuario } from 'src/app/interfaces/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
+
+@Component({
+  selector: 'app-crear-usuario',
+  templateUrl: './crear-usuario.component.html',
+  styleUrls: ['./crear-usuario.component.css']
+})
+export class CrearUsuarioComponent {
+
+  sexo: any[] = ['Masculino','Femenino'];
+  form:FormGroup;
+
+  constructor(private fb:FormBuilder, 
+              private usuarioservice: UsuarioService,
+              private router: Router,
+              private snackBar: MatSnackBar){
+
+    this.form=this.fb.group({
+      usuario:['',Validators.required],
+      nombre:['',Validators.required],
+      apellido:['',Validators.required],
+      sexo:['',Validators.required]
+    })
+  }
+
+  agregarUsuario(){
+  
+    const user:Usuario = {
+      usuario: this.form.value.usuario,
+      nombre: this.form.value.nombre,
+      apellido: this.form.value.apellido,
+      sexo: this.form.value.sexo,
+    }
+    this.usuarioservice.agrearUsuario(user); 
+    this.router.navigate(['/dashboard/usuarios'])
+
+    this.snackBar.open("El usuario se agregado con exito",'',{
+      duration:5000,
+      horizontalPosition:'center',
+    verticalPosition:'bottom'
+  })
+  }
+}
